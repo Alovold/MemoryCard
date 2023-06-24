@@ -1,23 +1,31 @@
-import logo from './logo.svg';
 import './App.css';
+import Card from './components/Card';
+import PageHeader from './components/Header';
+import { useState, useEffect } from 'react';
+
 
 function App() {
+  const [score, setScore] = useState(0)
+  const [bestScore, setBestScore] = useState(0)
+  const updateScore = (answer)=>{
+    if(answer){
+      setScore(score+1)
+    }
+    else {
+      setScore(score-1)
+    }
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <PageHeader score={score}/>
       </header>
+      <div className="pageBody">
+        <div id="cardDiv">
+        <Card changeScore={updateScore}/>
+        </div>
+      </div>
     </div>
   );
 }
