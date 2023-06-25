@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 
 
-export default function GamePrompt({updateScore, displayedCard, shuffler, update, item}) {
+export default function GamePrompt({updateScore, displayedCard, shuffler, update, item, updateTurn}) {
 
     const handleAnswer = (answer)=>{
         updateScore(answer)
         update(item.id)
+        updateTurn()
         shuffler()
     }
 

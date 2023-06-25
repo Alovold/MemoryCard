@@ -7,6 +7,8 @@ import { useState, useEffect } from 'react';
 function App() {
   const [score, setScore] = useState(0)
   const [bestScore, setBestScore] = useState(0)
+  const [finalScore, setFinalScore] = useState(0)
+  const [finalMessageVisible, setFinalMessageVisible] = useState("finalScore-hidden")
   const updateScore = (answer)=>{
     if(answer){
       setScore(score+1)
@@ -16,14 +18,30 @@ function App() {
     }
   }
 
+  const endGame = ()=>{
+    if (score > bestScore){
+      setBestScore(score);
+    }
+    setFinalScore(score)
+    setScore(0)
+    setFinalMessageVisible("finalScore")
+  }
+
+  const resetFinalMessage = ()=>{
+    setFinalMessageVisible("finalScore-hidden")
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <PageHeader score={score}/>
+        <PageHeader score={score} bestScore={bestScore}/>
       </header>
       <div className="pageBody">
         <div id="cardDiv">
-        <Card changeScore={updateScore}/>
+          <div className={finalMessageVisible}>
+            <p>Congratulations! Your final score is {finalScore}</p>
+          </div>
+        <Card changeScore={updateScore} endGame={endGame} resetFinalMessage={resetFinalMessage}/>
         </div>
       </div>
     </div>
